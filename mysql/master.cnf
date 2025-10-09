@@ -1,0 +1,37 @@
+[mysqld]
+server-id = 1
+log-bin = mysql-bin
+binlog-format = ROW
+max_binlog_size = 100M
+binlog_expire_logs_seconds = 604800
+sync_binlog = 1
+binlog-do-db = wordpress_db
+
+# Performance tuning
+innodb_buffer_pool_size = 512M
+innodb_log_file_size = 128M
+innodb_log_buffer_size = 16M
+innodb_flush_log_at_trx_commit = 1
+innodb_file_per_table = ON
+innodb_flush_method = O_DIRECT
+
+# Connection settings
+max_connections = 200
+connect_timeout = 10
+wait_timeout = 600
+interactive_timeout = 600
+max_allowed_packet = 64M
+
+# Security
+local_infile = 0
+skip_show_database = 1
+safe_user_create = 1
+default_authentication_plugin = mysql_native_password
+
+# Logging
+general_log = 1
+general_log_file = /var/log/mysql/general.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 2
+log_queries_not_using_indexes = 1

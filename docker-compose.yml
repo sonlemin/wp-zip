@@ -1,0 +1,358 @@
+services:
+  #cloudflared:
+  #  image: cloudflare/cloudflared:latest
+  #  container_name: wordpress_cloudflared
+  #  restart: unless-stopped
+  #  command: tunnel --no-autoupdate run
+  #  environment:
+  #    - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+  #  networks:
+  #    - frontend
+  #  depends_on:
+  #    - nginx
+    # healthcheck:
+      # test: ["CMD-SHELL", "cloudflared tunnel info || exit 1"]
+      # interval: 30s
+      # timeout: 10s
+      # retries: 3
+      # start_period: 30s
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: wordpress_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
+    networks:
+      - frontend
+      - backend
+    # healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost/health"]
+    #  interval: 30s
+    #  timeout: 10s
+    #  retries: 3
+
+  # WordPress Application (Multiple instances for load balancing)
+  wordpress:
+    image: wordpress:6.4-php8.1-apache
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: mysql-master:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DEBUG: 1
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_port=9003 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=wordpress-docker"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_REDIS_HOST', 'redis');
+        define('WP_REDIS_PORT', 6379);
+        define('WP_CACHE', true);
+        define('MEMCACHED_SERVERS', array('memcached:11211'));
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    networks:
+      - backend
+    depends_on:
+      - mysql-master
+      - redis
+      - memcached
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/wp-admin/install.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # WP-CLI Service
+  wp-cli:
+    image: wordpress:cli-php8.1
+    container_name: wordpress_cli
+    restart: "no"
+    environment:
+      WORDPRESS_DB_HOST: mysql-master:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wp-content:/var/www/html/wp-content
+      - ./wp-cli:/var/www/html/wp-cli
+    networks:
+      - backend
+    depends_on:
+      - mysql-master
+    command: tail -f /dev/null
+
+  # MySQL Master Database
+  mysql-master:
+    image: mysql:8.0
+    container_name: wordpress_mysql_master
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_REPLICATION_USER: replicator
+      MYSQL_REPLICATION_PASSWORD: ${MYSQL_REPLICATION_PASSWORD}
+    volumes:
+      - mysql_master_data:/var/lib/mysql
+      - ./mysql/master.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./logs/mysql:/var/log/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+    command: --default-authentication-plugin=mysql_native_password --log-bin=mysql-bin --server-id=1
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MySQL Slave Database
+  mysql-slave:
+    image: mysql:8.0
+    container_name: wordpress_mysql_slave
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_MASTER_HOST: mysql-master
+      MYSQL_REPLICATION_USER: replicator
+      MYSQL_REPLICATION_PASSWORD: ${MYSQL_REPLICATION_PASSWORD}
+    volumes:
+      - mysql_slave_data:/var/lib/mysql
+      - ./mysql/slave.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./logs/mysql-slave:/var/log/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - backend
+    depends_on:
+      - mysql-master
+    command: --default-authentication-plugin=mysql_native_password --server-id=2
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: wordpress_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOSTS: mysql-master,mysql-slave
+      PMA_PORTS: 3306,3306
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - mysql-master
+      - mysql-slave
+    networks:
+      - backend
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: wordpress_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./redis/redis.conf:/etc/redis/redis.conf
+    networks:
+      - backend
+    command: redis-server /etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Memcached
+  memcached:
+    image: memcached:alpine
+    container_name: wordpress_memcached
+    restart: unless-stopped
+    ports:
+      - "11211:11211"
+    networks:
+      - backend
+    command: memcached -m 256
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "11211"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Mail Server (MailHog for development)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: wordpress_mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web interface
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8025"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Fail2Ban Security
+  fail2ban:
+    image: crazymax/fail2ban:latest
+    container_name: wordpress_fail2ban
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-UTC}
+      F2B_LOG_LEVEL: INFO
+      F2B_DB_PURGE_AGE: 1d
+    volumes:
+      - ./fail2ban:/data
+      - ./logs:/var/log:ro
+    networks:
+      - backend
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+  # Backup Service
+  backup:
+    image: alpine:latest
+    container_name: wordpress_backup
+    restart: "no"
+    environment:
+      BACKUP_SCHEDULE: "0 2 * * *"  # Daily at 2 AM
+    volumes:
+      - wordpress_data:/backup/wordpress:ro
+      - mysql_master_data:/backup/mysql:ro
+      - ./backups:/backups
+      - ./backup/backup.sh:/backup.sh
+    networks:
+      - backend
+    depends_on:
+      - mysql-master
+    command: |
+      sh -c '
+        apk add --no-cache mysql-client dcron
+        echo "$$BACKUP_SCHEDULE /backup.sh" | crontab -
+        crond -f
+      '
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: wordpress_prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - backend
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  # Grafana Dashboard
+  grafana:
+    image: grafana/grafana:latest
+    container_name: wordpress_grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - backend
+    depends_on:
+      - prometheus
+
+  # Node Exporter for system metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: wordpress_node_exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - backend
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+
+  # cAdvisor for container metrics
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: wordpress_cadvisor
+    restart: unless-stopped
+    ports:
+      - "8083:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - backend
+    privileged: true
+    devices:
+      - /dev/kmsg
+
+volumes:
+  wordpress_data:
+    driver: local
+  mysql_master_data:
+    driver: local
+  mysql_slave_data:
+    driver: local
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
