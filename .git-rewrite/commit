@@ -1,0 +1,6 @@
+tree 6186b0dd66b3794ba42347753543b1488de90d42
+parent 45724483f0340bac6ddfad47aaa8257b907d96d4
+author sonlemin <sonlm2005@icloud.com> 1759992803 +0000
+committer sonlemin <sonlm2005@icloud.com> 1759992803 +0000
+
+Remove large log file and update .gitignore

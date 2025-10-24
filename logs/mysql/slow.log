@@ -1769,3 +1769,145 @@ SELECT DISTINCT t.term_id, tr.object_id
 			 FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
 			 WHERE tt.taxonomy IN ('category', 'post_tag', 'post_format') AND tr.object_id IN (6, 1)
 			 ORDER BY t.name ASC;
+/usr/sbin/mysqld, Version: 8.0.42 (MySQL Community Server - GPL). started with:
+Tcp port: 0  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+/usr/sbin/mysqld, Version: 8.0.42 (MySQL Community Server - GPL). started with:
+Tcp port: 0  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+/usr/sbin/mysqld, Version: 8.0.42 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+# Time: 2025-10-09T07:01:23.222374Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    34
+# Query_time: 0.001386  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 100
+use wordpress_db;
+SET timestamp=1759993283;
+DELETE FROM wp_options WHERE option_name REGEXP '^rss_[0-9a-f]{32}(_ts)?$';
+# Time: 2025-10-09T07:01:24.404614Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    35
+# Query_time: 0.000765  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 4
+SET timestamp=1759993284;
+SELECT DISTINCT t.term_id, tr.object_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('category', 'post_tag', 'post_format') AND tr.object_id IN (1)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:24.410436Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    35
+# Query_time: 0.000132  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 2
+SET timestamp=1759993284;
+SELECT  t.term_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id
+			WHERE tt.taxonomy IN ('nav_menu')
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:32.427622Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    44
+# Query_time: 0.000213  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 4
+SET timestamp=1759993292;
+SELECT DISTINCT t.term_id, tr.object_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('category', 'post_tag', 'post_format') AND tr.object_id IN (1)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:32.435723Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    44
+# Query_time: 0.000104  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 2
+SET timestamp=1759993292;
+SELECT DISTINCT t.term_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('category') AND tr.object_id IN (5)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:32.435884Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    44
+# Query_time: 0.000099  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 1
+SET timestamp=1759993292;
+SELECT DISTINCT t.term_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('post_tag') AND tr.object_id IN (5)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:32.436037Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    44
+# Query_time: 0.000096  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 1
+SET timestamp=1759993292;
+SELECT DISTINCT t.term_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('post_format') AND tr.object_id IN (5)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:43.891506Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    53
+# Query_time: 0.000386  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 4
+SET timestamp=1759993303;
+SELECT DISTINCT t.term_id, tr.object_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('category', 'post_tag', 'post_format') AND tr.object_id IN (1)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:01:58.011989Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    61
+# Query_time: 0.000321  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 4
+SET timestamp=1759993318;
+SELECT DISTINCT t.term_id, tr.object_id
+			FROM wp_terms AS t  INNER JOIN wp_term_taxonomy AS tt ON t.term_id = tt.term_id INNER JOIN wp_term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
+			WHERE tt.taxonomy IN ('category', 'post_tag', 'post_format') AND tr.object_id IN (1)
+			ORDER BY t.name ASC;
+# Time: 2025-10-09T07:02:32.931841Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:    74
+# Query_time: 0.000092  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 1
+SET timestamp=1759993352;
+SELECT comment_ID FROM wp_comments
+		WHERE comment_type = ''
+		LIMIT 1;
+# Time: 2025-10-09T07:03:31.884797Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:   112
+# Query_time: 0.000109  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 10
+SET timestamp=1759993411;
+SELECT COUNT( 1 )
+				FROM wp_posts
+				WHERE post_type = 'post'
+				AND post_status NOT IN ( 'trash','auto-draft','inherit','request-pending','request-confirmed','request-failed','request-completed' )
+				AND post_author = 1;
+# Time: 2025-10-09T07:04:00.169122Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:   123
+# Query_time: 0.000232  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 10
+SET timestamp=1759993440;
+SELECT COUNT( 1 )
+				FROM wp_posts
+				WHERE post_type = 'page'
+				AND post_status NOT IN ( 'trash','auto-draft','inherit','request-pending','request-confirmed','request-failed','request-completed' )
+				AND post_author = 1;
+# Time: 2025-10-09T07:04:02.217516Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:   128
+# Query_time: 0.000115  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 10
+SET timestamp=1759993442;
+SELECT COUNT( 1 )
+				FROM wp_posts
+				WHERE post_type = 'post'
+				AND post_status NOT IN ( 'trash','auto-draft','inherit','request-pending','request-confirmed','request-failed','request-completed' )
+				AND post_author = 1;
+# Time: 2025-10-09T07:06:59.719812Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:   161
+# Query_time: 0.000106  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 12
+SET timestamp=1759993619;
+SELECT COUNT( 1 )
+				FROM wp_posts
+				WHERE post_type = 'post'
+				AND post_status NOT IN ( 'trash','auto-draft','inherit','request-pending','request-confirmed','request-failed','request-completed' )
+				AND post_author = 1;
+# Time: 2025-10-09T07:10:19.844898Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id:   196
+# Query_time: 0.000266  Lock_time: 0.000002 Rows_sent: 1  Rows_examined: 3
+SET timestamp=1759993819;
+SELECT SQL_CALC_FOUND_ROWS wp_users.ID
+				FROM wp_users INNER JOIN wp_usermeta ON ( wp_users.ID = wp_usermeta.user_id )
+				WHERE 1=1 AND ( 
+  ( wp_usermeta.meta_key = 'wp_user_level' AND wp_usermeta.meta_value != '0' )
+)
+				ORDER BY display_name ASC
+				LIMIT 0, 50;
+# Time: 2025-10-23T07:37:04.830482Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.14]  Id: 120951
+# Query_time: 0.000279  Lock_time: 0.000001 Rows_sent: 1  Rows_examined: 10
+SET timestamp=1761205024;
+SELECT COUNT( 1 )
+				FROM wp_posts
+				WHERE post_type = 'post'
+				AND post_status NOT IN ( 'trash','auto-draft','inherit','request-pending','request-confirmed','request-failed','request-completed' )
+				AND post_author = 1;
