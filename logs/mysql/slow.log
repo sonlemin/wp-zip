@@ -1911,3 +1911,98 @@ SELECT COUNT( 1 )
 				WHERE post_type = 'post'
 				AND post_status NOT IN ( 'trash','auto-draft','inherit','request-pending','request-confirmed','request-failed','request-completed' )
 				AND post_author = 1;
+# Time: 2025-10-24T10:38:17.958704Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000330  Lock_time: 0.000001 Rows_sent: 47  Rows_examined: 47
+SET timestamp=1761302297;
+SELECT * FROM wp_revslider_css;
+# Time: 2025-10-24T10:38:18.047048Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000126  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.047481Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000367  Lock_time: 0.000003 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;
+# Time: 2025-10-24T10:38:18.047591Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000047  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;
+# Time: 2025-10-24T10:38:18.047743Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000055  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.047975Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000166  Lock_time: 0.000000 Rows_sent: 109  Rows_examined: 109
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_css;
+# Time: 2025-10-24T10:38:18.049961Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000072  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.050120Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000054  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.050259Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000057  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.050391Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000053  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.051637Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000138  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.053644Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000136  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.054395Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000064  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_sliders WHERE `type` != 'folder' ORDER BY 'id' 'ASC';
+# Time: 2025-10-24T10:38:18.055312Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000349  Lock_time: 0.000002 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_navigations;
+# Time: 2025-10-24T10:38:18.055464Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000136  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;
+# Time: 2025-10-24T10:38:18.056117Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000101  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;
+# Time: 2025-10-24T10:38:18.057173Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000078  Lock_time: 0.000000 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;
+# Time: 2025-10-24T10:38:18.057254Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000069  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;
+# Time: 2025-10-24T10:38:18.057384Z
+# User@Host: wordpress_user[wordpress_user] @  [172.20.0.12]  Id: 130354
+# Query_time: 0.000117  Lock_time: 0.000001 Rows_sent: 0  Rows_examined: 0
+SET timestamp=1761302298;
+SELECT * FROM wp_revslider_layer_animations;

@@ -1,0 +1,658 @@
+// ------------------------------------------------------------------------------------------------
+// BASE STYLE
+// ------------------------------------------------------------------------------------------------
+
+@import "config";
+
+@import "base/animations";
+
+@import "base/element-icons";
+
+@import "controls/tooltip";
+
+@import "controls/buttons-set";
+
+@import "elements/filters-area";
+
+@import "elements/stock-status";
+
+@import "elements/product-count";
+
+@import "elements/product-meta";
+
+@import "elements/empty-cart";
+
+@import "elements/checkout";
+
+@import "elements/popup-button";
+
+@import "elements/compare-img";
+
+@import "elements/button";
+
+@import "elements/notices";
+
+// ------------------------------------------------------------------------------------------------
+// ELEMENTOR EDITOR SIDEBAR
+// ------------------------------------------------------------------------------------------------
+
+// ------------------------------------------
+// ELEMENTOR OPTION LAYOUT
+// ------------------------------------------
+
+//**** ELEMENTOR ELEMENTS ORDER ****//
+
+#elementor-panel-categories {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+}
+
+.elementor-panel-category {
+	-ms-flex-order: 1;
+	order: 1;
+
+	-webkit-box-ordinal-group: 2;
+}
+
+// #elementor-panel-category-wd-elements {
+// 	-ms-flex-order: -1;
+// 	order: -1;
+
+// 	-webkit-box-ordinal-group: 1;
+// }
+
+#elementor-panel-category-favorites,
+div[id*="elementor-panel-category-wd-"] {
+	-ms-flex-order: 0;
+	order: 0;
+
+	-webkit-box-ordinal-group: 1;
+}
+
+
+
+//**** ELEMENTOR XTS BUTTONS ****//
+
+.elementor-control-type-wd_buttons {
+	padding-bottom: 5px;
+
+	.elementor-control-field {
+		flex-wrap: wrap;
+	}
+
+	.elementor-control-input-wrapper {
+		margin-top: 10px;
+		width: 100% !important;
+	}
+}
+
+//**** ELEMENTOR OPTION ANIMATION ****//
+
+.elementor-control {
+
+	&:not(.elementor-control-type-section) {
+
+		.elementor-control-content {
+			animation: xts-fade-in .3s ease;
+
+			animation-fill-mode: initial;
+		}
+	}
+}
+
+.elementor-control-list_type {
+
+	~ .elementor-control-type-media {
+
+		~ .elementor-control-type-icons {
+
+			.elementor-control-svg-uploader {
+				display: none;
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+// ELEMENTOR VISUAL EDITOR
+// ------------------------------------------------------------------------------------------------
+
+.cms_block-template-default,
+.woodmart_slide-template-default {
+
+	.website-wrapper {
+
+		> .container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-bottom: 0;
+			padding-top: 20px;
+			padding-bottom: 10px;
+			min-height: 100vh;
+		}
+	}
+
+	&.admin-bar {
+
+		.website-wrapper {
+
+			> .container {
+				min-height: calc(100vh - #{$admin-bar-height});
+			}
+		}
+	}
+}
+
+.cms_block-template-default,
+.woodmart_slide-template-default,
+.wd_product_tabs-template-default,
+.wd_popup-template-default,
+.wd_floating_block-template-default {
+
+	.whb-header {
+		display: none;
+	}
+
+	#elementor-add-new-section {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+//**** POPUP FLOATING BLOCK IN EDITOR ****//
+
+// .wd_popup-template-default,
+// .wd_floating_block-template-default {
+
+// 	.wd-page-wrapper {
+// 		height: 100vh;
+// 	}
+// }
+
+//**** FLOATING BLOCK IN EDITOR ****//
+
+.wd_floating_block-template-default {
+
+	.wd-fb-holder {
+
+		&.container {
+
+			&:before {
+				content: "";
+				position: absolute;
+				inset: 0 15px 0 15px;
+				background-color: var(--color-gray-100);
+				opacity: .4;
+				pointer-events: none;
+			}
+		}
+
+		.elementor-add-section-inner {
+			padding: 10px;
+			margin: 10px 0 0 0;
+		}
+
+		[data-view="select-type"] {
+
+			.elementor-add-section-inner {
+				padding-inline: 35px;
+			}
+		}
+
+		.elementor-add-section-drag-title {
+			display: none;
+		}
+	}
+
+	.wd-fb-wrap.wd-hide {
+		display: block !important;
+	}
+
+	&.elementor-editor-active {
+
+		.elementor-add-section-close,
+		.elementor-add-section-back {
+			inset-block-start: 23px;
+		}
+
+		.elementor-add-section-close {
+			inset-inline-start: 10px;
+		}
+
+		.elementor-add-section-back {
+			inset-inline-end: 10px;
+		}
+	}
+}
+
+//**** SMALL ADD ITEM SECTION IN SLIDE EDITOR ****//
+
+.woodmart_slide-template-default {
+
+	// .elementor-add-section-inner {
+	// 	margin: 0;
+	// }
+
+	.elementor-add-new-section {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.elementor-add-section-close {
+		color: $color-gray-300;
+
+		&:hover {
+			color: $color-gray-400;
+		}
+	}
+
+	[data-view="choose-action"] {
+		margin-top: 10px !important;
+
+		.elementor-add-section-inner {
+			padding: 0;
+			border: none !important;
+			background: none;
+			// margin-top: 10px;
+		}
+	}
+
+	[data-view="select-preset"] {
+
+		.elementor-add-section-inner {
+			padding-top: 20px;
+			padding-bottom: 15px;
+			background-color: rgba(240, 240, 240, .9);
+
+			path {
+				fill: $color-gray-300;
+			}
+		}
+	}
+
+	.elementor-add-section-drag-title {
+		display: none;
+	}
+
+	//**** SLIDERS CHANGE ANIMATIONS RESET ****//
+
+	.wd-slider-wrapper {
+
+		&.anim-fade {
+
+			.wd-slide {
+				pointer-events: auto;
+			}
+		}
+
+		&.anim-distortion {
+
+			.wd-slide-container {
+				opacity: 1;
+				pointer-events: auto;
+			}
+		}
+	}
+}
+
+//**** FIX CAROUSEL ON EDITOR ****//
+
+// .elementor-editor-active {
+
+// 	.xts-carousel {
+// 		min-height: 2px;
+// 	}
+// }
+
+//**** FIX ROW SETTINGS WHEN HEADER IS OVERLAP ****//
+
+.elementor-section--handles-inside > .elementor-element-overlay .elementor-editor-element-settings {
+	display: flex !important;
+}
+
+//**** HTML BLOCK COLOR SWITCHER ****//
+
+.wd-scheme-switcher {
+	position: fixed;
+	top: 0;
+	inset-inline-end: 0;
+	z-index: $z-layer-1;
+	margin: 8px;
+
+	> div {
+		padding: 0 15px;
+		height: 35px;
+		text-transform: uppercase;
+		font-weight: 600;
+		font-size: 12px;
+		line-height: 35px;
+		cursor: pointer;
+		transition: .2s all ease-in-out;
+
+		&:hover {
+			opacity: .8;
+		}
+	}
+
+	.admin-bar & {
+		top: 32px;
+	}
+}
+
+.wd-scheme-switcher-dark {
+	margin-bottom: 5px;
+	background-color: $color-gray-200;
+	color: $color-gray-800;
+}
+
+.wd-scheme-switcher-light {
+	background-color: $color-gray-900;
+	color: $color-white;
+}
+
+//**** HIDE STICKY SOCIAL ICONS IN ELEMENTOR EDITOR ****//
+
+.elementor-html {
+
+	.wd-sticky-social,
+	.wd-sticky-nav {
+		display: none;
+	}
+
+	.wd-action-hide-btn {
+		position: relative;
+	}
+
+	.wd-sticky-nav-enabled {
+		--wd-sticky-nav-w: .001px;
+	}
+}
+
+//**** OFF CANVAS COLUMN ****//
+
+.elementor-editor-active {
+
+	.elementor-column {
+
+		&.wd-side-hidden {
+			z-index: 99999;
+		}
+	}
+
+	.wd-sidebar-opener {
+
+		&.wd-not-on-shop {
+			display: none !important;
+		}
+	}
+}
+
+//**** OPEN TOGGLE ****//
+
+.elementor-widget-wd_toggle.elementor-element-editable .wd-el-toggle-content,
+.elementor-widget-wd_toggle .wd-el-toggle-content:has(.elementor-element-editable) {
+  display: block !important;
+}
+
+.elementor-widget-wd_toggle .wd-el-toggle-content {
+	transition-duration: 0ms !important;
+	height: unset !important;
+	margin-top: 20px !important;
+}
+
+//**** FIX LAST CHILD WITH ELEMENTOR INLINE EDITING ****//
+
+.reset-last-child .elementor-inline-editing > *:last-child {
+	margin-bottom: 0;
+}
+
+//**** HIDE CUSTOM BRAKEPOINTS IN CAROUSEL CONTROLS ****//
+
+.wd-hide-custom-breakpoints {
+
+	:is(
+	[data-device="widescreen"],
+	[data-device="laptop"],
+	[data-device="tablet_extra"],
+	[data-device="mobile_extra"]) {
+		display: none;
+	}
+}
+
+.wd-hide-tablet-breakpoint {
+
+	[data-device="tablet"] {
+		display: none;
+	}
+}
+
+// .wd-hide-mobile-breakpoint {
+
+// 	[data-device="mobile"] {
+// 		display: none;
+// 	}
+// }
+
+:is(
+.elementor-control-text,
+.elementor-control-after_title) {
+
+	&.elementor-control-type-wysiwyg {
+
+		.wp-media-buttons {
+			display: none;
+		}
+	}
+}
+
+//**** HIDE WOODMART CSS CLASSES CONTROL ****//
+
+.elementor-control-type-wd_css_class {
+	padding: 0 !important;
+}
+
+//**** FIX WOODMART CAROUSEL INSIDE COLUMN CONTAINER ****//
+
+.e-preview--show-hidden-elements {
+
+	&[data-elementor-device-mode=desktop],
+	&[data-elementor-device-mode=laptop],
+	&[data-elementor-device-mode=mobile],
+	&[data-elementor-device-mode=mobile_extra],
+	&[data-elementor-device-mode=tablet],
+	&[data-elementor-device-mode=tablet_extra],
+	&[data-elementor-device-mode=widescreen] {
+
+		.elementor-edit-area-active {
+
+			.elementor-hidden-desktop,
+			.elementor-hidden-laptop,
+			.elementor-hidden-mobile,
+			.elementor-hidden-mobile_extra,
+			.elementor-hidden-tablet,
+			.elementor-hidden-tablet_extra {
+
+				&:has(.wd-carousel) {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+// ADD SECTION
+// ------------------------------------------------------------------------------------------------
+
+.elementor-add-section-inner {
+
+	button {
+		min-height: unset;
+	}
+
+	.flex-preset-button,
+	.grid-preset-button {
+		gap: 0;
+		flex-direction: column;
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+// XTEMOS TEMPLATES
+// ------------------------------------------------------------------------------------------------
+
+.elementor-editor-active {
+
+	div.xts-library-modal-btn {
+		// margin-left: 5px;
+		background-color: #0F4C81;
+		vertical-align: top;
+		font-size: 0 !important;
+
+		&:hover {
+			background-color: #0b3b65;
+		}
+	
+		&:before {
+			content: "";
+			width: 16px;
+			height: 16px;
+			background-image: url(../../../../admin/assets/images/vc-icon/wd-xts-icon.svg);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+	
+		// .rtl & {
+		// 	margin-right: 5px;
+		// 	margin-left: 0;
+		// }
+	}
+}
+
+#xts-library-modal {
+
+	.xts-elementor-template-library-template-name {
+		flex: 1 0 0%;
+		text-align: right;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+
+	#xts-library-modal {
+
+		.xts-elementor-template-library-template-name {
+			color: #FFF;
+		}
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+// POPUP & FLOATING BLOCK
+// ------------------------------------------------------------------------------------------------
+
+.elementor-editor-active {
+
+	:is(.mfp-wrap, .wd-fb-holder) {
+		
+		&:is(.wd-hide-lg, .wd-hide-md-sm, .wd-hide-sm) {
+			display: flex !important;
+			
+			:is(.wd-popup-wrap, .wd-fb-wrap) {
+
+				&:before {
+					content: "";
+					display: none;
+					position: absolute;
+					inset: 0;
+					z-index: 99999;
+					pointer-events: none;
+					background: repeating-linear-gradient(125deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 1px, transparent 2px, transparent 9px);
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 1025px) {
+
+	.elementor-editor-active {
+
+		:is(.mfp-wrap, .wd-fb-holder) {
+			
+			&.wd-hide-lg {
+
+				:is(.wd-popup-wrap, .wd-fb-wrap) {
+					filter: opacity(0.4) saturate(0);
+
+					&:before {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+	.elementor-editor-active {
+
+		:is(.mfp-wrap, .wd-fb-holder) {
+
+			&.wd-hide-md-sm {
+
+				:is(.wd-popup-wrap, .wd-fb-wrap) {
+					filter: opacity(0.4) saturate(0);
+
+					&:before {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+
+	.elementor-editor-active {
+
+		:is(.mfp-wrap, .wd-fb-holder) {
+
+			&.wd-hide-sm {
+
+				:is(.wd-popup-wrap, .wd-fb-wrap) {
+					background: repeating-linear-gradient(125deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 1px, transparent 2px, transparent 9px);
+					filter: opacity(0.4) saturate(0);
+
+					&:before {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+// RTL
+// ------------------------------------------------------------------------------------------------
+
+// .rtl {
+
+// 	.wd-html-block-scheme-switcher {
+// 		right: auto;
+// 		left: 0;
+// 	}
+// }
