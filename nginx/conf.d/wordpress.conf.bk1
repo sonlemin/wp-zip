@@ -1,0 +1,69 @@
+#map $host$http_x_forwarded_proto $redirect_https {
+#    default 0;
+#    "~^wp0\.antoan360\.com(?!https)" 1;
+#}
+
+
+
+server {
+    listen 80;
+    server_name localhost 192.168.1.132;
+    
+    # Security settings
+    client_max_body_size 64M;
+    client_body_timeout 60;
+    client_header_timeout 60;
+    send_timeout 60;
+
+    if ($redirect_https = 1) {
+        return 301 https://$host$request_uri;
+    }
+
+    # Health check endpoint
+    location = /health {
+        access_log off;
+        return 200 "healthy\n";
+        add_header Content-Type text/plain;
+    }
+
+    # Block sensitive files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    location = /xmlrpc.php {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Static file caching
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+        proxy_pass http://wordpress:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Proxy all requests to WordPress container
+    location / {
+        proxy_pass http://wordpress:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_redirect off;
+        
+        # Increase timeouts for WordPress
+        proxy_connect_timeout 30s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+    }
+}
